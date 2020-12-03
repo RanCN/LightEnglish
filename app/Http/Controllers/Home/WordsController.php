@@ -14,8 +14,12 @@ class WordsController extends Controller
         $day = date('Ymd');
 
         $isExist = DB::table('le_user_words')->where('uid',1)->where('word',$word)->count();
-
         if($isExist) {
+
+            DB::transaction(function() {
+                // DB::table('le_user_words')->increment('repeat_num');
+                // DB::table('le_query_record')->insert([''])
+            });
             $result['code'] = 400;
             $result['msg'] = '该单词已记录';
             return json_encode($result);
@@ -36,8 +40,13 @@ class WordsController extends Controller
         }
     }
 
+    /**
+     * 当天单词接口
+     */
     public function list(Request $request) {
-        $res = DB::table('le_user_words')->where('uid',1)->get();
+        $day = $request->get('time');
+        $day = date('Ymd',substr($day,0,10));
+        $res = DB::table('le_user_words')->where('day',$day)->where('uid',1)->get();
         $res = $res ? $res->toArray() : [];
 
         $result = [];
@@ -48,6 +57,9 @@ class WordsController extends Controller
         return json_encode($result);
     }
 
+    /**
+     * 删除接口
+     */
     public function del(Request $request) {
         $id = $request->get('id');
         $res = DB::table('le_user_words')->where('id',$id)->delete();

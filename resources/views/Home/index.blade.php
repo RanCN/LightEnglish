@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/home/css/bootstrap.min.css">
 
-    <title>Hello, world!</title>
+    <title>Light English</title>
 
     <style>
         a {
@@ -132,6 +131,7 @@
     <script src="/home/js/md5.js"></script>
 
     <script>
+        const apiUrl = 'http://le.mydy2020.com/index.php/api/'
         new Vue({
             el: '#app',
             data: {
@@ -146,11 +146,13 @@
                 let that = this
                 let date = new Date();
                 let now = date.getFullYear() + "年" + (date.getMonth()+1) + "月" + date.getDate() + "日";
-                that.now_date = now
-
+                let timestamp = date.getTime()
                 $.ajax({
-                    url: 'http://www.light.test/index.php/api/words/list',
+                    url: apiUrl + 'words/list',
                     type: 'get',
+                    data: {
+                        time: timestamp
+                    },
                     success: function(res) {
                         res = JSON.parse(res)
                         console.log(res,'res')
@@ -198,7 +200,7 @@
                     let that = this
                     console.log(this.query)
                     $.ajax({
-                        url: 'http://www.light.test/index.php/api/words/record',
+                        url: apiUrl + 'words/record',
                         type: 'get',
                         data: {
                             val: that.query
@@ -221,7 +223,7 @@
                     console.log(id,'id')
                     if(confirm('确定要删除吗？')==true) {
                         $.ajax({
-                            url: 'http://www.light.test/index.php/api/words/del',
+                            url: apiUrl + 'words/del',
                             type: 'get',
                             data: {
                                 id: id
