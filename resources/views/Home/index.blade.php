@@ -38,16 +38,16 @@
             display: inline-block;
             width: 106px;
             height: 32px;
-           
+
             line-height: 32px;
             text-align: center;
             font-weight: 400;
-            
+
             font-size: 14px;
             text-decoration: none!important;
             border-radius: 5px;
         }
-        
+
         .btn1 {
             background-color: #4395ff;
             color: #fff;
@@ -114,7 +114,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Optional JavaScript -->
@@ -125,13 +125,15 @@
     <!-- vue -->
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
+
     <!-- 百度api -->
     <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="/home/js/md5.js"></script>
 
     <script>
-        const apiUrl = 'http://le.mydy2020.com/index.php/api/'
+        // const apiUrl = 'http://le.mydy2020.com/index.php/api/'
+        const apiUrl = 'http://www.le.test/index.php/api/'
+
         new Vue({
             el: '#app',
             data: {
@@ -147,6 +149,8 @@
                 let date = new Date();
                 let now = date.getFullYear() + "年" + (date.getMonth()+1) + "月" + date.getDate() + "日";
                 let timestamp = date.getTime()
+                that.now_date = now
+                // console.log()
                 $.ajax({
                     url: apiUrl + 'words/list',
                     type: 'get',
@@ -193,9 +197,10 @@
                         success: function (data) {
                             console.log(data);
                             that.dst = data.trans_result[0].dst
-                        } 
+                        }
                     });
                 },
+                // 记录接口
                 record: function() {
                     let that = this
                     console.log(this.query)
@@ -204,7 +209,7 @@
                         type: 'get',
                         data: {
                             val: that.query
-                        },  
+                        },
                         success: function(res) {
                             res = JSON.parse(res)
                             console.log(res)
@@ -218,6 +223,8 @@
                         }
                     })
                 },
+
+                // 删除接口
                 del: function(id, index) {
                     let that = this
                     console.log(id,'id')
