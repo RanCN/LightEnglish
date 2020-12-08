@@ -131,8 +131,8 @@
     <script src="/home/js/md5.js"></script>
 
     <script>
-        // const apiUrl = 'http://le.mydy2020.com/index.php/api/'
-        const apiUrl = 'http://www.le.test/index.php/api/'
+        const apiUrl = 'http://le.mydy2020.com/index.php/api/'
+        // const apiUrl = 'http://www.le.test/index.php/api/'
 
         new Vue({
             el: '#app',
@@ -144,13 +144,21 @@
                 list:[]
             },
             created() {
-                // console.log('hello111')
+                var date
+                var location = window.location.href
+                var index = location.indexOf("time")
                 let that = this
-                let date = new Date();
+
+                if (index != -1) {
+                    date = location.substring(index+5)
+                    date = date.substr(0,4) + '-' + date.substr(4,2) + '-' + date.substr(6,2);
+                    date = new Date(date)
+
+                }
+                date = date ? date : new Date();
                 let now = date.getFullYear() + "年" + (date.getMonth()+1) + "月" + date.getDate() + "日";
                 let timestamp = date.getTime()
                 that.now_date = now
-                // console.log()
                 $.ajax({
                     url: apiUrl + 'words/list',
                     type: 'get',

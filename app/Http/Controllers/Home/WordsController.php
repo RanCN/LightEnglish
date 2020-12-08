@@ -74,7 +74,7 @@ class WordsController extends Controller
      */
     public function del(Request $request) {
         $id = $request->get('id');
-        DB::transaction(function($res1) use ($id) {
+        DB::transaction(function() use ($id) {
             DB::table('le_user_words')->where('id',$id)->delete();
             DB::table('le_query_record')->where('uw_id',$id)->delete();
         });

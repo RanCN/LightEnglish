@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\WordsController;
+use App\Http\Controllers\Home\DaysController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +22,16 @@ Route::get('/', function () {
     return view('Home.index');
 });
 
+Route::get('/list', function() {
+    return view('Home.list');
+});
 
 Route::group(['prefix'=>'api'], function () {
     Route::get('/words/record', [WordsController::class, 'index']);
+
     Route::get('/words/list', [WordsController::class, 'list']);
     Route::get('/words/del', [WordsController::class, 'del']);
+
+    //每日列表
+    Route::get('/days/list', [DaysController::class, 'list']);
 });
