@@ -78,6 +78,7 @@ class WordsController extends Controller
             DB::table('le_user_words')->where('id',$id)->delete();
             DB::table('le_query_record')->where('uw_id',$id)->delete();
         });
+        $res = true;
         if($res) {
             $result['code'] = 200;
             $result['msg'] = "删除成功";
